@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {
-		ModBlocks.initialize();
+		ModBlocks.registerBlocks();
 	}
 	
 	public void init(FMLInitializationEvent event) {
