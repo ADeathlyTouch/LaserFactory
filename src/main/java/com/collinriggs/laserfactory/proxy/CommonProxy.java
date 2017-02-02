@@ -10,6 +10,7 @@ public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {
 		ModBlocks.registerBlocks();
+		ModBlocks.registerTileEntities();
 	}
 	
 	public void init(FMLInitializationEvent event) {
