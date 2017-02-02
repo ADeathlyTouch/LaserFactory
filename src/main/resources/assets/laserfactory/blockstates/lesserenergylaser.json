@@ -1,5 +1,7 @@
 {
 	"variants": {
-		"normal": { "model": "laserfactory:lesserenergylaser" }
+        "axis=y":  { "model": "laserfactory:lesserenergylaser" },
+        "axis=z":   { "model": "laserfactory:lesserenergylaser", "x": 90 },
+        "axis=x":   { "model": "laserfactory:lesserenergylaser", "x": 90, "y": 90 }
 	}
 }

@@ -1,19 +1,19 @@
 package com.collinriggs.laserfactory.blocks.lasers;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class LesserEnergyLaser extends Block {
+public class LesserEnergyLaser extends BlockRotatedPillar {
 
 	public LesserEnergyLaser() {
 		super(Material.PISTON);
 		this.setUnlocalizedName("lesserEnergyLaser");
-		this.setRegistryName("LesserEnergyLaser");
+		this.setRegistryName("lesserenergylaser");
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		this.setHardness(10);
 		this.setResistance(200);
-		this.setHarvestLevel("pickaxe", 2);
+		this.setHarvestLevel("pickaxe", 3);
 	}
 	
 }
