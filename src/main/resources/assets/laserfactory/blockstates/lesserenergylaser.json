@@ -1,7 +1,10 @@
 {
-	"variants": {
-        "axis=y":  { "model": "laserfactory:lesserenergylaser" },
-        "axis=z":   { "model": "laserfactory:lesserenergylaser", "x": 90 },
-        "axis=x":   { "model": "laserfactory:lesserenergylaser", "x": 90, "y": 90 }
-	}
+    "variants": {
+        "facing=down":  { "model": "laserfactory:lesserenergylaser", "x": 270 },
+        "facing=up":    { "model": "laserfactory:lesserenergylaser", "x": 90 },
+        "facing=north": { "model": "laserfactory:lesserenergylaser", "y": 180 },
+        "facing=south": { "model": "laserfactory:lesserenergylaser" },
+        "facing=west":  { "model": "laserfactory:lesserenergylaser", "y": 90 },
+        "facing=east":  { "model": "laserfactory:lesserenergylaser", "y": 270 }
+    }
 }
