@@ -1,14 +1,17 @@
 package com.collinriggs.laserfactory.blocks;
 
+import static net.minecraftforge.fml.common.registry.GameRegistry.registerTileEntity;
+import static net.minecraftforge.fml.client.registry.ClientRegistry.bindTileEntitySpecialRenderer;
+
 import com.collinriggs.laserfactory.blocks.lasers.LesserEnergyLaser;
 import com.collinriggs.laserfactory.blocks.lasers.tile.TileEntityLesserEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.tile.specialrenderer.TileEntityLesserEnergyLaserRenderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
@@ -23,6 +26,8 @@ public class ModBlocks {
 	
 	public static void registerRenders() {
 		registerRender(lesserEnergyLaser);
+		
+		bindTileEntitySpecialRenderer(TileEntityLesserEnergyLaser.class, new TileEntityLesserEnergyLaserRenderer());
 	}
 	
 	public static void registerTileEntities() {
@@ -36,10 +41,6 @@ public class ModBlocks {
 	
 	private static void registerRender(Block block) {
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
-	}
-	
-	private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String name) {
-		GameRegistry.registerTileEntity(tileEntityClass, name);
 	}
 	
 }

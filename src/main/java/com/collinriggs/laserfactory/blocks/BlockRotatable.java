@@ -56,5 +56,9 @@ public class BlockRotatable extends BlockDirectional {
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
+    
+    public EnumFacing getFacing() {
+    	return this.getFacing();
+    }
 
 }
