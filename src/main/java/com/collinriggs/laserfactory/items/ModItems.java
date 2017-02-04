@@ -1,22 +1,28 @@
 package com.collinriggs.laserfactory.items;
 
-import com.collinriggs.laserfactory.items.lasers.LesserLaser;
+import com.collinriggs.laserfactory.items.misc.ItemGlowingLapisShard;
+
+import static net.minecraftforge.fml.common.registry.GameRegistry.register;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 	
-	public static Item lesserLaser;
+	
+	
+	//misc
+	public static Item glowingLapisShard;
 	
 	public static void registerItems() {
-		GameRegistry.register(lesserLaser = new LesserLaser());
+		glowingLapisShard = new ItemGlowingLapisShard();
+		
+		register(glowingLapisShard);
 	}
 	
 	public static void registerRenders() {
-		registerRender(lesserLaser);
+		registerRender(glowingLapisShard);
 	}
 	
 	private static void registerRender(Item item) {
