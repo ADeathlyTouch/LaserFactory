@@ -3,9 +3,10 @@ package com.collinriggs.laserfactory.blocks;
 import static net.minecraftforge.fml.client.registry.ClientRegistry.bindTileEntitySpecialRenderer;
 import static net.minecraftforge.fml.common.registry.GameRegistry.registerTileEntity;
 
-import com.collinriggs.laserfactory.blocks.lasers.BlockLesserEnergyLaser;
-import com.collinriggs.laserfactory.blocks.lasers.tile.TileEntityLesserEnergyLaser;
-import com.collinriggs.laserfactory.blocks.lasers.tile.specialrenderer.TileEntityLesserEnergyLaserRenderer;
+import com.collinriggs.laserfactory.blocks.lasers.energy.BlockLesserEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.energy.tile.TileEntityEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.energy.tile.EnergyLaserTESR;
+import com.collinriggs.laserfactory.blocks.lasers.energy.tile.TileEntityLesserEnergyLaser;
 import com.collinriggs.laserfactory.blocks.misc.BlockGlowingLapis;
 
 import net.minecraft.block.Block;
@@ -41,11 +42,11 @@ public class ModBlocks {
 		
 		registerRender(glowingLapis);
 		
-		bindTileEntitySpecialRenderer(TileEntityLesserEnergyLaser.class, new TileEntityLesserEnergyLaserRenderer());
+		bindTileEntitySpecialRenderer(TileEntityLesserEnergyLaser.class, new EnergyLaserTESR());
 	}
 	
 	public static void registerTileEntities() {
-		registerTileEntity(TileEntityLesserEnergyLaser.class, "tile_entity_lesser_energy_laser");
+		registerTileEntity(TileEntityEnergyLaser.class, "tile_entity_lesser_energy_laser");
 	}
 	
 	private static void registerBlock(Block block) {

@@ -11,4 +11,7 @@ public class ItemGlowingLapisShard extends Item {
 		this.setRegistryName("glowinglapisshard");
 		this.setCreativeTab(LaserFactory.CREATIVE_TAB);
 	}
+	
+	
+
 }
