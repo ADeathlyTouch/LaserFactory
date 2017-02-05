@@ -7,6 +7,8 @@ import com.collinriggs.laserfactory.blocks.lasers.energy.blocks.BlockLesserEnerg
 import com.collinriggs.laserfactory.blocks.lasers.energy.renderers.EnergyLaserTESR;
 import com.collinriggs.laserfactory.blocks.lasers.energy.tiles.TileEntityLesserEnergyLaser;
 import com.collinriggs.laserfactory.blocks.misc.BlockGlowingLapis;
+import com.collinriggs.laserfactory.blocks.misc.GlowingLapisTE;
+import com.collinriggs.laserfactory.blocks.misc.GlowingLapisTESR;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -21,7 +23,7 @@ public class ModBlocks {
 	public static Block lesserEnergyLaser;
 	
 	//Machines
-	
+	public static Block test;
 	
 	//Misc
 	public static Block glowingLapis;	
@@ -42,10 +44,12 @@ public class ModBlocks {
 		registerRender(glowingLapis);
 		
 		bindTileEntitySpecialRenderer(TileEntityLesserEnergyLaser.class, new EnergyLaserTESR());
+		bindTileEntitySpecialRenderer(GlowingLapisTE.class, new GlowingLapisTESR());
 	}
 	
 	public static void registerTileEntities() {
 		registerTileEntity(TileEntityLesserEnergyLaser.class, "tile_entity_lesser_energy_laser");
+		registerTileEntity(GlowingLapisTE.class, "glowinglapisTe");
 	}
 	
 	private static void registerBlock(Block block) {
