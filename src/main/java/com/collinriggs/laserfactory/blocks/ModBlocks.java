@@ -3,9 +3,9 @@ package com.collinriggs.laserfactory.blocks;
 import static net.minecraftforge.fml.client.registry.ClientRegistry.bindTileEntitySpecialRenderer;
 import static net.minecraftforge.fml.common.registry.GameRegistry.registerTileEntity;
 
-import com.collinriggs.laserfactory.blocks.lasers.energy.BlockLesserEnergyLaser;
-import com.collinriggs.laserfactory.blocks.lasers.energy.tile.EnergyLaserTESR;
-import com.collinriggs.laserfactory.blocks.lasers.energy.tile.TileEntityLesserEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.energy.blocks.BlockLesserEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.energy.renderers.EnergyLaserTESR;
+import com.collinriggs.laserfactory.blocks.lasers.energy.tiles.TileEntityLesserEnergyLaser;
 import com.collinriggs.laserfactory.blocks.misc.BlockGlowingLapis;
 
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package com.collinriggs.laserfactory.blocks.lasers.energy.tile;
+package com.collinriggs.laserfactory.blocks.lasers.generic;
 
 import javax.annotation.Nullable;
 
@@ -17,15 +17,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class TileEntityEnergyLaser extends TileEntity implements ITickable {
+public abstract class TileEntityLaser extends TileEntity implements ITickable {
 	
-	public final int ENERGY_TRANSFER_RATE;
 	public final int MAX_RANGE;
 	
 	private int laserLength = 0;
 	
-	protected TileEntityEnergyLaser(int transferRate, int maxRange) {
-		ENERGY_TRANSFER_RATE = transferRate;
+	protected TileEntityLaser(int maxRange) {
 		MAX_RANGE = maxRange;
 	}
 

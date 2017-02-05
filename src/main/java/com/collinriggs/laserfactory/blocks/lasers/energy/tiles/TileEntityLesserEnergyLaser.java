@@ -1,4 +1,4 @@
-package com.collinriggs.laserfactory.blocks.lasers.energy.tile;
+package com.collinriggs.laserfactory.blocks.lasers.energy.tiles;
 
 public class TileEntityLesserEnergyLaser extends TileEntityEnergyLaser {
 

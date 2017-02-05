@@ -1,7 +1,7 @@
-package com.collinriggs.laserfactory.blocks.lasers.energy;
+package com.collinriggs.laserfactory.blocks.lasers.energy.blocks;
 
-import com.collinriggs.laserfactory.blocks.lasers.EnumLaserLevel;
-import com.collinriggs.laserfactory.blocks.lasers.energy.tile.TileEntityLesserEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.energy.tiles.TileEntityLesserEnergyLaser;
+import com.collinriggs.laserfactory.blocks.lasers.generic.EnumLaserLevel;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
