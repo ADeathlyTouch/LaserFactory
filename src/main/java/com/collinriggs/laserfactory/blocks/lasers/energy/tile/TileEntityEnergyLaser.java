@@ -1,10 +1,14 @@
 package com.collinriggs.laserfactory.blocks.lasers.energy.tile;
 
+import javax.annotation.Nullable;
+
 import com.collinriggs.laserfactory.blocks.BlockRotatable;
 
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -18,7 +22,7 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 	public final int ENERGY_TRANSFER_RATE;
 	public final int MAX_RANGE;
 	
-	private int laser_length = 0;
+	private int laserLength = 0;
 	
 	protected TileEntityEnergyLaser(int transferRate, int maxRange) {
 		ENERGY_TRANSFER_RATE = transferRate;
@@ -37,15 +41,15 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
 						if (state.getBlock() instanceof BlockGrass) {
-							laser_length = y;
+							laserLength = y;
 						} else {
-							laser_length = 0;
+							laserLength = 0;
 						}
 						this.markDirty();
 						break;
 					}
 					if (y >= MAX_RANGE) {
-						laser_length = 0;
+						laserLength = 0;
 						this.markDirty();
 					}
 				}
@@ -56,15 +60,15 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
 						if (state.getBlock() instanceof BlockGrass) {
-							laser_length = x;
+							laserLength = x;
 						} else {
-							laser_length = 0;
+							laserLength = 0;
 						}
 						this.markDirty();
 						break;
 					}
 					if (x >= MAX_RANGE) {
-						laser_length = 0;
+						laserLength = 0;
 						this.markDirty();
 					}
 				}
@@ -75,15 +79,15 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
 						if (state.getBlock() instanceof BlockGrass) {
-							laser_length = z;
+							laserLength = z;
 						} else {
-							laser_length = 0;
+							laserLength = 0;
 						}
 						this.markDirty();
 						break;
 					}
 					if (z >= MAX_RANGE) {
-						laser_length = 0;
+						laserLength = 0;
 						this.markDirty();
 					}
 				}
@@ -94,15 +98,15 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
 						if (state.getBlock() instanceof BlockGrass) {
-							laser_length = z;
+							laserLength = z;
 						} else {
-							laser_length = 0;
+							laserLength = 0;
 						}
 						this.markDirty();
 						break;
 					}
 					if (z >= MAX_RANGE) {
-						laser_length = 0;
+						laserLength = 0;
 						this.markDirty();
 					}
 				}
@@ -113,15 +117,15 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
 						if (state.getBlock() instanceof BlockGrass) {
-							laser_length = y;
+							laserLength = y;
 						} else {
-							laser_length = 0;
+							laserLength = 0;
 						}
 						this.markDirty();
 						break;
 					}
 					if (y >= MAX_RANGE) {
-						laser_length = 0;
+						laserLength = 0;
 						this.markDirty();
 					}
 				}
@@ -132,15 +136,15 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
 						if (state.getBlock() instanceof BlockGrass) {
-							laser_length = x;
+							laserLength = x;
 						} else {
-							laser_length = 0;
+							laserLength = 0;
 						}
 						this.markDirty();
 						break;
 					}
 					if (x >= MAX_RANGE) {
-						laser_length = 0;
+						laserLength = 0;
 						this.markDirty();
 					}
 				}
@@ -153,20 +157,35 @@ public abstract class TileEntityEnergyLaser extends TileEntity implements ITicka
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
-		this.laser_length = compound.getInteger("laser_length");
+		this.laserLength = compound.getInteger("LaserLength");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		
-		compound.setInteger("laser_length", laser_length);
+		compound.setInteger("LaserLength", laserLength);
 		
 		return compound;
 	}
 	
+	@Nullable
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
+    }
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		this.readFromNBT(pkt.getNbtCompound());
+	}
+
+    public NBTTagCompound getUpdateTag()
+    {
+        return this.writeToNBT(new NBTTagCompound());
+    }
+	
 	public int getLaserLength() {
-		return laser_length;
+		return laserLength;
 	}
 	
 	@Override

@@ -4,7 +4,6 @@ import static net.minecraftforge.fml.client.registry.ClientRegistry.bindTileEnti
 import static net.minecraftforge.fml.common.registry.GameRegistry.registerTileEntity;
 
 import com.collinriggs.laserfactory.blocks.lasers.energy.BlockLesserEnergyLaser;
-import com.collinriggs.laserfactory.blocks.lasers.energy.tile.TileEntityEnergyLaser;
 import com.collinriggs.laserfactory.blocks.lasers.energy.tile.EnergyLaserTESR;
 import com.collinriggs.laserfactory.blocks.lasers.energy.tile.TileEntityLesserEnergyLaser;
 import com.collinriggs.laserfactory.blocks.misc.BlockGlowingLapis;
@@ -46,7 +45,7 @@ public class ModBlocks {
 	}
 	
 	public static void registerTileEntities() {
-		registerTileEntity(TileEntityEnergyLaser.class, "tile_entity_lesser_energy_laser");
+		registerTileEntity(TileEntityLesserEnergyLaser.class, "tile_entity_lesser_energy_laser");
 	}
 	
 	private static void registerBlock(Block block) {
