@@ -2,6 +2,9 @@ tile.lesserEnergyLaser.name=Lesser Energy Laser
 
 tile.glowingLapisBlock.name=Glowing Lapis Lazuli Block
 
+item.unrefinedEnergyLaser.name=Unrefined Energy Laser
+item.refinedEnergyLaser.name=Refined Energy Laser
+
 item.glowingLapisShard.name=Glowing Lapis Lazuli Shard
 
 itemGroup.laserfactory=Laser Factory

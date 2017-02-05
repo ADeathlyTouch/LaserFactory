@@ -16,7 +16,7 @@ public class EnergyLaserTESR extends TileEntitySpecialRenderer<TileEntityEnergyL
 		EnumFacing facing = (EnumFacing) Minecraft.getMinecraft().world.getBlockState(te.getPos()).getProperties().get(BlockLesserEnergyLaser.FACING);
 		
 		if (te.getLaserLength() > 0) {
-			RenderHelper.renderBeamNoGlow(te, partialTicks, te.getLaserLength() + .5D, 50, 255, 50, 255, 0.05, facing);	
+			RenderHelper.renderBeamNoGlow(te, partialTicks, te.getLaserLength() + .5D, 0, 237, 255, 150, 0.05, facing);	
 		}
 		
 	}
