@@ -1,15 +1,11 @@
 package com.collinriggs.laserfactory.items.lasers;
 
-import com.collinriggs.laserfactory.LaserFactory;
+import com.collinriggs.laserfactory.blocks.lasers.generic.EnumLaserType;
 
-import net.minecraft.item.Item;
-
-public class ItemEnergyLaser extends Item {
+public class ItemEnergyLaser extends ItemLaser {
 
 	public ItemEnergyLaser(boolean refined) {
-		this.setUnlocalizedName((!refined ? "un" : "") + "refinedEnergyLaser");
-		this.setRegistryName((!refined ? "un" : "") + "refinedenergylaser");
-		this.setCreativeTab(LaserFactory.CREATIVE_TAB);
+		super(refined, EnumLaserType.ENERGY);
 	}
 	
 }

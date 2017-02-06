@@ -1,4 +1,7 @@
 tile.lesserEnergyLaser.name=Lesser Energy Laser
+tile.sunLaser.name=Sun Laser
+
+tile.laserRefiner.name=Laser Refiner
 
 tile.glowingLapisBlock.name=Glowing Lapis Lazuli Block
 

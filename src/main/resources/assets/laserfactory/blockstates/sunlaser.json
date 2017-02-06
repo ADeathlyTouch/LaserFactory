@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "laserfactory:sunlaser", "x": 270 },
+        "facing=up":    { "model": "laserfactory:sunlaser", "x": 90 },
+        "facing=north": { "model": "laserfactory:sunlaser", "y": 180 },
+        "facing=south": { "model": "laserfactory:sunlaser" },
+        "facing=west":  { "model": "laserfactory:sunlaser", "y": 90 },
+        "facing=east":  { "model": "laserfactory:sunlaser", "y": 270 }
+    }
+}

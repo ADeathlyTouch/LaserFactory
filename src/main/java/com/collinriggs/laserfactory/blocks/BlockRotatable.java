@@ -6,7 +6,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -27,16 +26,6 @@ public class BlockRotatable extends BlockDirectional {
 	
 	@Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState iblockstate = worldIn.getBlockState(pos.offset(facing.getOpposite()));
-
-        if (iblockstate.getBlock() == Blocks.END_ROD) {
-            EnumFacing enumfacing = (EnumFacing)iblockstate.getValue(FACING);
-
-            if (enumfacing == facing) {
-                return this.getDefaultState().withProperty(FACING, facing.getOpposite());
-            }
-        }
-
         return this.getDefaultState().withProperty(FACING, facing);
     }
     

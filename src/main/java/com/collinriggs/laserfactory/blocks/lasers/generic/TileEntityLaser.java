@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.collinriggs.laserfactory.blocks.BlockRotatable;
 
-import net.minecraft.block.BlockGrass;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -19,12 +19,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TileEntityLaser extends TileEntity implements ITickable {
 	
-	public final int MAX_RANGE;
+	public final int MAX_RANGE, MIN_RANGE;
 	
 	private int laserLength = 0;
 	
-	protected TileEntityLaser(int maxRange) {
+	public TileEntityLaser(int maxRange, int minRange) {
 		MAX_RANGE = maxRange;
+		MIN_RANGE = minRange;
+	}
+	
+	public TileEntityLaser(int maxRange) {
+		this(maxRange, 1);
 	}
 
 	@Override
@@ -34,11 +39,11 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 			
 			switch(facing) {
 			case DOWN:
-				for (int y = 1; y <= MAX_RANGE; y++) {
+				for (int y = MIN_RANGE; y <= MAX_RANGE; y++) {
 					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY() - y, this.getPos().getZ());
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
-						if (state.getBlock() instanceof BlockGrass) {
+						if (laserEndAtBlock(state.getBlock())) {
 							laserLength = y;
 						} else {
 							laserLength = 0;
@@ -53,11 +58,11 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 				}
 				break;
 			case EAST:
-				for (int x = 1; x <= MAX_RANGE; x++) {
+				for (int x = MIN_RANGE; x <= MAX_RANGE; x++) {
 					BlockPos pos = new BlockPos(this.getPos().getX() + x, this.getPos().getY(), this.getPos().getZ());
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
-						if (state.getBlock() instanceof BlockGrass) {
+						if (laserEndAtBlock(state.getBlock())) {
 							laserLength = x;
 						} else {
 							laserLength = 0;
@@ -72,11 +77,11 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 				}
 				break;
 			case NORTH:
-				for (int z = 1; z <= MAX_RANGE; z++) {
+				for (int z = MIN_RANGE; z <= MAX_RANGE; z++) {
 					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() - z);
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
-						if (state.getBlock() instanceof BlockGrass) {
+						if (laserEndAtBlock(state.getBlock())) {
 							laserLength = z;
 						} else {
 							laserLength = 0;
@@ -91,11 +96,11 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 				}
 				break;
 			case SOUTH:
-				for (int z = 1; z <= MAX_RANGE; z++) {
+				for (int z = MIN_RANGE; z <= MAX_RANGE; z++) {
 					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() + z);
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
-						if (state.getBlock() instanceof BlockGrass) {
+						if (laserEndAtBlock(state.getBlock())) {
 							laserLength = z;
 						} else {
 							laserLength = 0;
@@ -110,11 +115,11 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 				}
 				break;
 			case UP:
-				for (int y = 1; y <= MAX_RANGE; y++) {
+				for (int y = MIN_RANGE; y <= MAX_RANGE; y++) {
 					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY() + y, this.getPos().getZ());
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
-						if (state.getBlock() instanceof BlockGrass) {
+						if (laserEndAtBlock(state.getBlock())) {
 							laserLength = y;
 						} else {
 							laserLength = 0;
@@ -129,11 +134,11 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 				}
 				break;
 			case WEST:
-				for (int x = 1; x <= MAX_RANGE; x++) {
+				for (int x = MIN_RANGE; x <= MAX_RANGE; x++) {
 					BlockPos pos = new BlockPos(this.getPos().getX() - x, this.getPos().getY(), this.getPos().getZ());
 					IBlockState state = this.getWorld().getBlockState(pos);
 					if (state.isFullBlock()) {
-						if (state.getBlock() instanceof BlockGrass) {
+						if (laserEndAtBlock(state.getBlock())) {
 							laserLength = x;
 						} else {
 							laserLength = 0;
@@ -150,6 +155,8 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 			}
 		}
 	}
+	
+	protected abstract boolean laserEndAtBlock(Block block);
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -177,8 +184,8 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 		this.readFromNBT(pkt.getNbtCompound());
 	}
 
-    public NBTTagCompound getUpdateTag()
-    {
+	@Override
+    public NBTTagCompound getUpdateTag() {
         return this.writeToNBT(new NBTTagCompound());
     }
 	

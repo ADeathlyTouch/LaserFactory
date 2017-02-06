@@ -1,7 +1,8 @@
 package com.collinriggs.laserfactory.blocks.lasers.generic;
 
 public enum EnumLaserType {
-	ENERGY;
+	ENERGY,
+	SUN;
 	
 	@Override
 	public String toString() {

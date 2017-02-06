@@ -6,7 +6,7 @@ import com.collinriggs.laserfactory.blocks.lasers.generic.LaserTESR;
 public class EnergyLaserTESR extends LaserTESR<TileEntityEnergyLaser> {
 
 	public EnergyLaserTESR() {
-		super(0, 237, 255, 150);
+		super(0, 237, 255);
 	}
 
 }

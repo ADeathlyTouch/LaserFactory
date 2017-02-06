@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 
-public class ModItems {
+public final class ModItems {
 	
 	//lasers
 	public static Item unrefinedEnergyLaser;

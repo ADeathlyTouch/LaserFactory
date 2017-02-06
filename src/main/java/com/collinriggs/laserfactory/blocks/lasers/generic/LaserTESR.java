@@ -9,13 +9,12 @@ import net.minecraft.util.EnumFacing;
 
 public class LaserTESR<T extends TileEntityLaser> extends TileEntitySpecialRenderer<T> {
 	
-	private final int RED, GREEN, BLUE, ALPHA;
+	private final int RED, GREEN, BLUE;
 	
-	public LaserTESR(int r, int g, int b, int a) {
+	public LaserTESR(int r, int g, int b) {
 		RED = r;
 		GREEN = g;
 		BLUE = b;
-		ALPHA = a;
 	}
 	
 	@Override
@@ -25,7 +24,7 @@ public class LaserTESR<T extends TileEntityLaser> extends TileEntitySpecialRende
 		EnumFacing facing = (EnumFacing) Minecraft.getMinecraft().world.getBlockState(te.getPos()).getProperties().get(BlockLesserEnergyLaser.FACING);
 		
 		if (te.getLaserLength() > 0) {
-			RenderHelper.renderBeamNoGlow(te, partialTicks, te.getLaserLength() + .5D, RED, GREEN, BLUE, ALPHA, 0.05, facing);	
+			RenderHelper.renderBeamNoGlow(te, partialTicks, te.getLaserLength(), RED, BLUE, GREEN, 150, 0.05, facing);	
 		}
 		
 	}
