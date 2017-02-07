@@ -10,7 +10,7 @@ public class LaserRefinerTESR extends TileEntitySpecialRenderer<TileEntityLaserR
 	public void renderTileEntityAt(TileEntityLaserRefiner te, double x, double y, double z, float partialTicks, int destroyStage) {
 		super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
 		
-		System.out.println(te.getItemStack());
+		
 	}
 	
 }
