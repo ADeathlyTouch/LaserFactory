@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.collinriggs.laserfactory.crafting.laserrefiner.LaserRefinerCraftingManager;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,11 +34,18 @@ public class TileEntityLaserRefiner extends TileEntity implements ITickable {
 	public void removeLaser() {
 		if (!world.isRemote) {
 			if (item != null) {
-				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), new ItemStack(item)));
+				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item)));
 				item = null;
 				this.markDirty();
 			}
 		}
+	}
+	
+	@Override
+	public void markDirty() {
+		super.markDirty();
+		IBlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
 	}
 	
 	@Override
@@ -46,10 +54,9 @@ public class TileEntityLaserRefiner extends TileEntity implements ITickable {
 			//itemStack = new ItemStack(LaserRefinerCraftingManager.getResult(itemStack.getItem()), 1);
 			//this.markDirty();
 		}
-		//System.out.println(itemStack.toString());
 	}
 	
-	public Item getItemStack() {
+	public Item getItem() {
 		return item;
 	}
 	
@@ -76,6 +83,7 @@ public class TileEntityLaserRefiner extends TileEntity implements ITickable {
 		else
 			item = stack.getItem();
 		ticksRemaining = compound.getInteger("TicksRemaining");
+		this.markDirty();
 	}
 	
 	@Nullable
@@ -85,6 +93,7 @@ public class TileEntityLaserRefiner extends TileEntity implements ITickable {
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		System.out.println(this.getWorld().isRemote);
 		this.readFromNBT(pkt.getNbtCompound());
 	}
 

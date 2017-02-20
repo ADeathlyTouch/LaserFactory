@@ -41,7 +41,7 @@ public class BlockLaserRefiner extends Block implements ITileEntityProvider {
 			TileEntityLaserRefiner refiner = (TileEntityLaserRefiner) te;
 			
 			if (playerIn.isSneaking()) {
-				System.out.println(refiner.getItemStack());
+				System.out.println(refiner.getItem());
 				return true;
 			}
 			
