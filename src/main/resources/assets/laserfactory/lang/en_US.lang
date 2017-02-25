@@ -5,6 +5,8 @@ tile.laserRefiner.name=Laser Refiner
 
 tile.glowingLapisBlock.name=Glowing Lapis Lazuli Block
 
+container.laserAssembler=Laser Assembler
+
 item.unrefinedEnergyLaser.name=Unrefined Energy Laser
 item.refinedEnergyLaser.name=Refined Energy Laser
 

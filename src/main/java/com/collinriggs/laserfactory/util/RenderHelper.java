@@ -21,12 +21,14 @@ import net.minecraft.util.math.MathHelper;
 
 public class RenderHelper {
 	
+	private static final ResourceLocation BEACON_TEXTURE = new ResourceLocation("textures/entity/beacon_beam.png");
+	
 	//Created by TheRealp455w0rd
 	public static void renderBeamNoGlow(TileEntity tileEntity, float partialTicks, double length, @Nonnull int red, @Nonnull int blue, @Nonnull int green, @Nonnull int beamAlpha, double beamRadius, EnumFacing... sides) {
 		if (tileEntity == null || tileEntity.getWorld() == null) {
 			return;
 		}
-		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/entity/beacon_beam.png"));
+		Minecraft.getMinecraft().getTextureManager().bindTexture(BEACON_TEXTURE);
 		List<EnumFacing> sideList = Arrays.asList(sides);
 		length = length < 1 ? 1 : length;
 		double height = length;

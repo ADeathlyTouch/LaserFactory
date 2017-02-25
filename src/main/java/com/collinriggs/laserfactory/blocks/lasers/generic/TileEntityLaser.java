@@ -3,6 +3,7 @@ package com.collinriggs.laserfactory.blocks.lasers.generic;
 import javax.annotation.Nullable;
 
 import com.collinriggs.laserfactory.blocks.BlockRotatable;
+import com.collinriggs.laserfactory.blocks.TEHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -23,6 +24,8 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 	
 	private int laserLength = 0;
 	
+	private BlockPos targetPos;
+	
 	public TileEntityLaser(int maxRange, int minRange) {
 		MAX_RANGE = maxRange;
 		MIN_RANGE = minRange;
@@ -34,125 +37,151 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if (this.getWorld() != null) {
-			EnumFacing facing = (EnumFacing) world.getBlockState(this.getPos()).getProperties().get(BlockRotatable.FACING);
-			
-			switch(facing) {
-			case DOWN:
-				for (int y = MIN_RANGE; y <= MAX_RANGE; y++) {
-					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY() - y, this.getPos().getZ());
-					IBlockState state = this.getWorld().getBlockState(pos);
-					if (state.isFullBlock()) {
-						if (laserEndAtBlock(state.getBlock())) {
-							laserLength = y;
-						} else {
-							laserLength = 0;
-						}
-						this.markDirty();
-						break;
-					}
-					if (y >= MAX_RANGE) {
+		if (this.getWorld() != null && !this.getWorld().isRemote) {
+			if (targetPos == null) {
+				//if there is no block to check for or the old block has been replaced
+				checkForBlock();
+			} else if (!laserEndAtBlock(this.getWorld().getBlockState(targetPos).getBlock()))
+				checkForBlock();
+		}
+	}
+	
+	private void checkForBlock() {
+		EnumFacing facing = (EnumFacing) world.getBlockState(this.getPos()).getProperties().get(BlockRotatable.FACING);
+		
+		switch(facing) {
+		case DOWN:
+			for (int y = MIN_RANGE; y <= MAX_RANGE; y++) {
+				BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY() - y, this.getPos().getZ());
+				IBlockState state = this.getWorld().getBlockState(pos);
+				if (state.isFullBlock()) {
+					if (laserEndAtBlock(state.getBlock())) {
+						laserLength = y;
+					} else {
 						laserLength = 0;
-						this.markDirty();
 					}
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
 				}
-				break;
-			case EAST:
-				for (int x = MIN_RANGE; x <= MAX_RANGE; x++) {
-					BlockPos pos = new BlockPos(this.getPos().getX() + x, this.getPos().getY(), this.getPos().getZ());
-					IBlockState state = this.getWorld().getBlockState(pos);
-					if (state.isFullBlock()) {
-						if (laserEndAtBlock(state.getBlock())) {
-							laserLength = x;
-						} else {
-							laserLength = 0;
-						}
-						this.markDirty();
-						break;
-					}
-					if (x >= MAX_RANGE) {
-						laserLength = 0;
-						this.markDirty();
-					}
+				if (y >= MAX_RANGE) {
+					laserLength = 0;
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
 				}
-				break;
-			case NORTH:
-				for (int z = MIN_RANGE; z <= MAX_RANGE; z++) {
-					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() - z);
-					IBlockState state = this.getWorld().getBlockState(pos);
-					if (state.isFullBlock()) {
-						if (laserEndAtBlock(state.getBlock())) {
-							laserLength = z;
-						} else {
-							laserLength = 0;
-						}
-						this.markDirty();
-						break;
-					}
-					if (z >= MAX_RANGE) {
-						laserLength = 0;
-						this.markDirty();
-					}
-				}
-				break;
-			case SOUTH:
-				for (int z = MIN_RANGE; z <= MAX_RANGE; z++) {
-					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() + z);
-					IBlockState state = this.getWorld().getBlockState(pos);
-					if (state.isFullBlock()) {
-						if (laserEndAtBlock(state.getBlock())) {
-							laserLength = z;
-						} else {
-							laserLength = 0;
-						}
-						this.markDirty();
-						break;
-					}
-					if (z >= MAX_RANGE) {
-						laserLength = 0;
-						this.markDirty();
-					}
-				}
-				break;
-			case UP:
-				for (int y = MIN_RANGE; y <= MAX_RANGE; y++) {
-					BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY() + y, this.getPos().getZ());
-					IBlockState state = this.getWorld().getBlockState(pos);
-					if (state.isFullBlock()) {
-						if (laserEndAtBlock(state.getBlock())) {
-							laserLength = y;
-						} else {
-							laserLength = 0;
-						}
-						this.markDirty();
-						break;
-					}
-					if (y >= MAX_RANGE) {
-						laserLength = 0;
-						this.markDirty();
-					}
-				}
-				break;
-			case WEST:
-				for (int x = MIN_RANGE; x <= MAX_RANGE; x++) {
-					BlockPos pos = new BlockPos(this.getPos().getX() - x, this.getPos().getY(), this.getPos().getZ());
-					IBlockState state = this.getWorld().getBlockState(pos);
-					if (state.isFullBlock()) {
-						if (laserEndAtBlock(state.getBlock())) {
-							laserLength = x;
-						} else {
-							laserLength = 0;
-						}
-						this.markDirty();
-						break;
-					}
-					if (x >= MAX_RANGE) {
-						laserLength = 0;
-						this.markDirty();
-					}
-				}
-				break;			
 			}
+			break;
+		case EAST:
+			for (int x = MIN_RANGE; x <= MAX_RANGE; x++) {
+				BlockPos pos = new BlockPos(this.getPos().getX() + x, this.getPos().getY(), this.getPos().getZ());
+				IBlockState state = this.getWorld().getBlockState(pos);
+				if (state.isFullBlock()) {
+					if (laserEndAtBlock(state.getBlock())) {
+						laserLength = x;
+					} else {
+						laserLength = 0;
+					}
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+				if (x >= MAX_RANGE) {
+					laserLength = 0;
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+			}
+			break;
+		case NORTH:
+			for (int z = MIN_RANGE; z <= MAX_RANGE; z++) {
+				BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() - z);
+				IBlockState state = this.getWorld().getBlockState(pos);
+				if (state.isFullBlock()) {
+					if (laserEndAtBlock(state.getBlock())) {
+						laserLength = z;
+					} else {
+						laserLength = 0;
+					}
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+				if (z >= MAX_RANGE) {
+					laserLength = 0;
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+			}
+			break;
+		case SOUTH:
+			for (int z = MIN_RANGE; z <= MAX_RANGE; z++) {
+				BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() + z);
+				IBlockState state = this.getWorld().getBlockState(pos);
+				if (state.isFullBlock()) {
+					if (laserEndAtBlock(state.getBlock())) {
+						laserLength = z;
+					} else {
+						laserLength = 0;
+					}
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+				if (z >= MAX_RANGE) {
+					laserLength = 0;
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+			}
+			break;
+		case UP:
+			for (int y = MIN_RANGE; y <= MAX_RANGE; y++) {
+				BlockPos pos = new BlockPos(this.getPos().getX(), this.getPos().getY() + y, this.getPos().getZ());
+				IBlockState state = this.getWorld().getBlockState(pos);
+				if (state.isFullBlock()) {
+					if (laserEndAtBlock(state.getBlock())) {
+						laserLength = y;
+					} else {
+						laserLength = 0;
+					}
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+				if (y >= MAX_RANGE) {
+					laserLength = 0;
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+			}
+			break;
+		case WEST:
+			for (int x = MIN_RANGE; x <= MAX_RANGE; x++) {
+				BlockPos pos = new BlockPos(this.getPos().getX() - x, this.getPos().getY(), this.getPos().getZ());
+				IBlockState state = this.getWorld().getBlockState(pos);
+				if (state.isFullBlock()) {
+					if (laserEndAtBlock(state.getBlock())) {
+						laserLength = x;
+					} else {
+						laserLength = 0;
+					}
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+				if (x >= MAX_RANGE) {
+					laserLength = 0;
+					this.markDirty();
+					TEHelper.sync(this);
+					this.targetPos = pos;
+				}
+			}
+			break;			
 		}
 	}
 	
@@ -163,6 +192,9 @@ public abstract class TileEntityLaser extends TileEntity implements ITickable {
 		super.readFromNBT(compound);
 		
 		this.laserLength = compound.getInteger("LaserLength");
+		
+		this.markDirty();
+		TEHelper.sync(this);
 	}
 	
 	@Override

@@ -9,8 +9,10 @@ import com.collinriggs.laserfactory.blocks.lasers.energy.tiles.TileEntityLesserE
 import com.collinriggs.laserfactory.blocks.lasers.sun.BlockSunLaser;
 import com.collinriggs.laserfactory.blocks.lasers.sun.SunLaserTESR;
 import com.collinriggs.laserfactory.blocks.lasers.sun.TileEntitySunLaser;
+import com.collinriggs.laserfactory.blocks.machines.blocks.BlockLaserAssembler;
 import com.collinriggs.laserfactory.blocks.machines.blocks.BlockLaserRefiner;
 import com.collinriggs.laserfactory.blocks.machines.renderers.LaserRefinerTESR;
+import com.collinriggs.laserfactory.blocks.machines.tiles.TileEntityLaserAssembler;
 import com.collinriggs.laserfactory.blocks.machines.tiles.TileEntityLaserRefiner;
 import com.collinriggs.laserfactory.blocks.misc.blocks.BlockGlowingLapis;
 
@@ -29,6 +31,7 @@ public final class ModBlocks {
 	
 	//Machines
 	public static Block laserRefiner;
+	public static Block laserAssembler;
 	
 	//Misc
 	public static Block glowingLapis;	
@@ -38,6 +41,7 @@ public final class ModBlocks {
 		registerBlock(sunLaser = new BlockSunLaser());
 		
 		registerBlock(laserRefiner = new BlockLaserRefiner());
+		registerBlock(laserAssembler = new BlockLaserAssembler());
 		
 		registerBlock(glowingLapis = new BlockGlowingLapis());
 	}
@@ -47,6 +51,7 @@ public final class ModBlocks {
 		registerRender(sunLaser);
 		
 		registerRender(laserRefiner);
+		registerRender(laserAssembler);
 		
 		registerRender(glowingLapis);
 		
@@ -60,6 +65,7 @@ public final class ModBlocks {
 		registerTileEntity(TileEntitySunLaser.class, "tile_entity_sun_laser");
 		
 		registerTileEntity(TileEntityLaserRefiner.class, "tile_entity_laser_refinery");
+		registerTileEntity(TileEntityLaserAssembler.class, "tile_entity_laser_assembler");
 	}
 	
 	private static void registerBlock(Block block) {

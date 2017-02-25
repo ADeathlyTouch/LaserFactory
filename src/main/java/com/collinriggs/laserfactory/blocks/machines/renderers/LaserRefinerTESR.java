@@ -14,11 +14,19 @@ public class LaserRefinerTESR extends TileEntitySpecialRenderer<TileEntityLaserR
 	public void renderTileEntityAt(TileEntityLaserRefiner te, double x, double y, double z, float partialTicks, int destroyStage) {
 		super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
 		
-		if (te.getItem() != null) {
-			final EntityItem item = new EntityItem(te.getWorld(), 0, 0, 0, new ItemStack(te.getItem()));
+		if (!te.getInventory().isEmpty()) {
+			ItemStack stackToRender = te.getInventory().getStackInSlot(0);
+			stackToRender.setCount(1);
+			final EntityItem item = new EntityItem(te.getWorld(), 0, 0, 0, stackToRender);;
+			item.hoverStart = 0.0f;
+			
 			GlStateManager.translate(x, y, z);
 			
-			Minecraft.getMinecraft().getRenderManager().doRenderEntity(item, 0, 0, 0, 0, partialTicks, false);
+			GlStateManager.rotate(90, 0, 0, 1);
+			GlStateManager.translate(0.4, -1.2, 0.5);
+			GlStateManager.scale(3, 2, 2);
+			
+			Minecraft.getMinecraft().getRenderManager().doRenderEntity(item, 0, 0, 0, 0, 0, false);
 		}
 	}
 	

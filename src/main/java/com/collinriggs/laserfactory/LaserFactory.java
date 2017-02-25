@@ -47,5 +47,6 @@ public class LaserFactory {
     public void postInit(FMLPostInitializationEvent event) {
     	proxy.postInit(event);
     }
+
     
 }

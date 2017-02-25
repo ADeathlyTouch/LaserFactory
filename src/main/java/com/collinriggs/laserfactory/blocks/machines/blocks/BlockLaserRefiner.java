@@ -18,7 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockLaserRefiner extends Block implements ITileEntityProvider {
-
+	
 	public BlockLaserRefiner() {
 		super(Material.IRON);
 		this.setUnlocalizedName("laserRefiner");
@@ -32,33 +32,33 @@ public class BlockLaserRefiner extends Block implements ITileEntityProvider {
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityLaserRefiner();
-	} 
+	}
 	
+	private boolean ran = false;
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		TileEntity te = worldIn.getTileEntity(pos);
-		if (te != null && te instanceof TileEntityLaserRefiner) {
-			TileEntityLaserRefiner refiner = (TileEntityLaserRefiner) te;
-			
-			if (playerIn.isSneaking()) {
-				System.out.println(refiner.getItem());
-				return true;
+		if (!worldIn.isRemote && !playerIn.isSneaking() && !ran) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			if (te != null && te instanceof TileEntityLaserRefiner) {
+				TileEntityLaserRefiner refiner = (TileEntityLaserRefiner) te;
+				
+				ItemStack heldItem = playerIn.inventory.getCurrentItem();
+				if (!refiner.addLaser(heldItem)) {
+					refiner.removeLaser();
+				}
 			}
-			
-			ItemStack heldItem = playerIn.inventory.getCurrentItem();
-			if (refiner.addLaser(heldItem.getItem())) {
-				heldItem.grow(-1);
-			} else {
-				refiner.removeLaser();
-			}
+
+			ran = !ran;
+			return true;
 		}
+		ran = !ran;
+		return false;
 		
-		return true;
 	}
 	
 	@Override
 	public boolean isFullBlock(IBlockState state) {
-		return false;	
+		return false;
 	}
 	
 	@Override
@@ -67,7 +67,27 @@ public class BlockLaserRefiner extends Block implements ITileEntityProvider {
 	}
 	
 	@Override
+	public boolean isBlockNormalCube(IBlockState state) {
+		return false;	
+	}
+	
+	@Override
+	public boolean isTranslucent(IBlockState state) {
+		return true;	
+	}
+	
+	@Override
 	public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+		return false;	
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;	
+	}
+	
+	@Override
+	public boolean isFullyOpaque(IBlockState state) {
 		return false;	
 	}
 	
@@ -81,16 +101,6 @@ public class BlockLaserRefiner extends Block implements ITileEntityProvider {
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return BOX;	
-	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;	
-	}
-	
-	@Override
-	public boolean isFullyOpaque(IBlockState state) {
-		return false;	
 	}
 
 }

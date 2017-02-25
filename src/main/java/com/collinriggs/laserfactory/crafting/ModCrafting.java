@@ -1,10 +1,11 @@
 package com.collinriggs.laserfactory.crafting;
 
+import static com.collinriggs.laserfactory.crafting.MachineCraftingManager.addRecipe;
 import static net.minecraftforge.fml.common.registry.GameRegistry.addRecipe;
-import static com.collinriggs.laserfactory.crafting.laserrefiner.LaserRefinerCraftingManager.addRecipe;
 
 import com.collinriggs.laserfactory.blocks.ModBlocks;
-import com.collinriggs.laserfactory.crafting.laserrefiner.LaserRefinerRecipe;
+import com.collinriggs.laserfactory.blocks.machines.tiles.TileEntityLaserAssembler;
+import com.collinriggs.laserfactory.blocks.machines.tiles.TileEntityLaserRefiner;
 import com.collinriggs.laserfactory.items.ModItems;
 
 import net.minecraft.init.Blocks;
@@ -15,7 +16,7 @@ public final class ModCrafting {
 
 	public static void registerRecipes() {
 		registerVanillaRecipes();
-		registerLaserRefinerRecipes();
+		registerMachineRecipes();
 	}
 	
 	private static void registerVanillaRecipes() {
@@ -26,8 +27,9 @@ public final class ModCrafting {
 		addRecipe(new ItemStack(ModBlocks.glowingLapis), new Object[] {" G ", "GLG", " G ", 'G', Items.GLOWSTONE_DUST, 'L', Blocks.LAPIS_BLOCK});
 	}
 	
-	private static void registerLaserRefinerRecipes() {
-		addRecipe(new LaserRefinerRecipe(ModItems.unrefinedEnergyLaser, ModItems.refinedEnergyLaser));
+	private static void registerMachineRecipes() {
+		addRecipe(TileEntityLaserRefiner.CRAFTING_KEY, new ItemStack(ModItems.refinedEnergyLaser), ModItems.unrefinedEnergyLaser);
+		addRecipe(TileEntityLaserAssembler.CRAFTING_KEY, new ItemStack(Blocks.GLASS), Blocks.SAND, Blocks.SAND, Blocks.SAND, Blocks.SAND, Blocks.SAND);
 	}
 	
 }
