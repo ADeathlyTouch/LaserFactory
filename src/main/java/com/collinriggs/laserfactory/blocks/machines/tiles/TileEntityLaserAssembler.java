@@ -1,10 +1,9 @@
 package com.collinriggs.laserfactory.blocks.machines.tiles;
 
-import javax.annotation.Nullable;
-
 import com.collinriggs.laserfactory.blocks.TEHelper;
 import com.collinriggs.laserfactory.items.inventory.Inventory;
 
+import com.sun.istack.internal.Nullable;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -21,27 +20,17 @@ public class TileEntityLaserAssembler extends TileEntity implements ITickable {
 	
 	@Override
 	public void update() {
-		increaseCraftingProgress();
+		this.craftingProgress++;
 		if (craftingProgress > 100)
-			resetCraftingProgress();
+			this.craftingProgress = 0;
+		this.markDirty();
+		TEHelper.sync(this);
 	}
 	
 	public int getCraftingProgress() {
 		return craftingProgress;
 	}
-	
-	public void increaseCraftingProgress() {
-		this.craftingProgress++;
-		this.markDirty();
-		TEHelper.sync(this);
-	}
-	
-	public void resetCraftingProgress() {
-		this.craftingProgress = 0;
-		this.markDirty();
-		TEHelper.sync(this);
-	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = LaserFactory.MODID, name = LaserFactory.MODNAME, version = LaserFactory.VERSION)
+@Mod(modid = LaserFactory.MODID, name = LaserFactory.MODNAME, version = LaserFactory.VERSION, dependencies = "after:jei")
 public class LaserFactory {
 	
     public static final String MODID = "laserfactory";
