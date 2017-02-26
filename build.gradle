@@ -33,21 +33,6 @@ minecraft {
     mappings = "snapshot_20161220"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
-
-repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        url = "http://dvs1.progwml6.com/files/maven"
-    }
-}
-
-dependencies {
-    // compile against the JEI API
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
-    // at runtime, use the full JEI jar
-    runtime "mezz.jei:jei_${mc_version}:${jei_version}"
-}
-
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
@@ -65,4 +50,29 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+idea { module { inheritOutputDirs = true } }
+
+repositories {
+
+  maven {
+    // location of the maven that hosts JEI files
+    url = "http://dvs1.progwml6.com/files/maven"
+  }
+  //Craft Tweaker/MT 3
+  maven { 
+        name 'jared maven'
+        url "http://blamejared.com/maven"
+    }
+}
+
+dependencies {
+
+  deobfCompile "MineTweaker3:MineTweaker3-API:3.0.21.26"
+  
+  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
+  
+  runtime "mezz.jei:jei_${mc_version}:${jei_version}"
+
 }
